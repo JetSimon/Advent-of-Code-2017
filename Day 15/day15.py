@@ -15,16 +15,19 @@ def fillStack(n, factor, mul,name="",fill=5000000):
     stack = []
     while len(stack) < fill:
         n = generate(n, factor, 2147483647)
-        if n % mul:
+        if n % mul == 0:
             stack.append(n)
-            print("stack",name,"at %", 100*(len(stack) / fill))
+            per = 100*(len(stack) / fill)
+            if per % 5 == 0:
+                print("stack",name,"at %", per)
     return stack
 
-a = 65
-b = 8921
+a = 512
+b = 191
 
 stacka = fillStack(a, 16807, 4,"A")
 stackb = fillStack(b, 48271, 8,"B")
+
 
 print("stack a has",len(stacka),"stack b has",len(stackb))
 
@@ -36,14 +39,17 @@ print("starting judgement")
 for i in range(5000000):
     fa = stacka[i]
     fb = stackb[i]
+
     matching = judge(fa,fb)
+    if matching:
+        print("match at",i)
 
     count = count + 1 if matching else count
     pairs += 1
 
     per = 100*(pairs/5000000)
 
-    if(per % 1 == 0):
+    if(per % 5 == 0):
         print(per,"% complete")
 
 print("FINAL COUNT:",count)
