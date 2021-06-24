@@ -154,9 +154,14 @@ printGrid(out)
 for i in range(18):
     print("ITERATION",i+1)
     out = splitGrid( out )
-
+    count = 0
+    outOf = len(out) * len(out[0])
     for i in range (len(out)):
         for j in range (len(out[0])):
+            count += 1
+            per = (count / outOf) * 100
+            if per % 1 == 0:
+                print(per,"% done")
             out[i][j] = findRule(out[i][j], rules)
     out = joinGrid(out)
     #printGrid(out)
